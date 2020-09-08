@@ -14,32 +14,31 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "employee", uniqueConstraints={@UniqueConstraint(columnNames ={"firstName", "lastName","dateOfBirth"})})
+@Table(name = "employee", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "firstName", "lastName", "dateOfBirth" }) })
 public class EmployeeDTO implements Serializable {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long employeeId;
 
-    private String firstName;
-    private String lastName;
-    private Date dateOfBirth;
-   
-    @OneToOne(mappedBy = "employee", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private AddressDTO address;
-    
+	private String firstName;
+	private String lastName;
+	private Date dateOfBirth;
 
-    public EmployeeDTO() {
-    }
+	@OneToOne(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private AddressDTO address;
 
-    public EmployeeDTO(String firstName, String lastName, Date dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-       
-    }
+	public EmployeeDTO() {
+	}
 
-    public Long getEmployeeId() {
+	public EmployeeDTO(String firstName, String lastName, Date dateOfBirth) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+
+	}
+
+	public Long getEmployeeId() {
 		return employeeId;
 	}
 
@@ -78,6 +77,5 @@ public class EmployeeDTO implements Serializable {
 	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
-
 
 }

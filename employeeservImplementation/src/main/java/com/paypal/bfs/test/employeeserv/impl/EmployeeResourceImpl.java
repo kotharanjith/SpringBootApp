@@ -31,36 +31,33 @@ import javax.ws.rs.BadRequestException;
 @RestController
 @Order
 public class EmployeeResourceImpl implements EmployeeResource {
-	
+
 	@Autowired
 	EmployeeRepository employeeRepository;
-	
-    public static final String date_format = "yyyy/MM/dd";
-    
+
+	public static final String date_format = "yyyy/MM/dd";
+
 	private static final Logger log = LoggerFactory.getLogger(EmployeeResourceImpl.class);
 
+	@Override
+	public ResponseEntity<Employee> employeeGetById(String id) {
 
-    @Override
-    public ResponseEntity<Employee> employeeGetById(String id) {
-    	
-    	if(StringUtils.isEmpty(id)) {
-    		throw new BadRequestException("employee id can not be null or empty");
-    	}
-    	
+		if (StringUtils.isEmpty(id)) {
+			throw new BadRequestException("employee id can not be null or empty");
+		}
 
-  	
 		Optional<EmployeeDTO> employeeDto = null;
-		
+
 		try {
 			employeeDto = employeeRepository.findById(Long.parseLong(id));
 		} catch (Exception e) {
 			log.error("error while fetching employee details from data base :" + e.getMessage());
 			throw new EmployeeServiceException("error while creating employee");
-		
+
 		}
-		
+
 		EmployeeDTO emp = null;
-		
+
 		try {
 			emp = employeeDto.get();
 		} catch (Exception e) {
@@ -75,38 +72,38 @@ public class EmployeeResourceImpl implements EmployeeResource {
 		employee.setAddress(address);
 
 		return new ResponseEntity<>(employee, HttpStatus.OK);
-    }
+	}
 
 	private Address getAddressInfo(EmployeeDTO emp) {
-		 AddressDTO addressDTO = emp.getAddress();
-         
-         Address address = new Address();
-         address.setAddress1(addressDTO.getAddress1());
-         address.setAddress2(addressDTO.getAddress2());
-         address.setCity(addressDTO.getCity());
-         address.setCountry(addressDTO.getCountry());
-         address.setState(addressDTO.getState());
-         address.setZipcode(addressDTO.getZipCode());
-         address.setAddressId(addressDTO.getAddressId().intValue());
-         
-         return address;
-         
+		AddressDTO addressDTO = emp.getAddress();
+
+		Address address = new Address();
+		address.setAddress1(addressDTO.getAddress1());
+		address.setAddress2(addressDTO.getAddress2());
+		address.setCity(addressDTO.getCity());
+		address.setCountry(addressDTO.getCountry());
+		address.setState(addressDTO.getState());
+		address.setZipcode(addressDTO.getZipCode());
+		address.setAddressId(addressDTO.getAddressId().intValue());
+
+		return address;
+
 	}
 
 	private Employee getEmployeeInfo(EmployeeDTO emp) {
 		Employee employee = new Employee();
-         employee.setId(emp.getEmployeeId().intValue());
-         employee.setFirstName(emp.getFirstName());
-         employee.setLastName(emp.getLastName());
-         employee.setDateBirth(String.valueOf(emp.getDateOfBirth()));
+		employee.setId(emp.getEmployeeId().intValue());
+		employee.setFirstName(emp.getFirstName());
+		employee.setLastName(emp.getLastName());
+		employee.setDateBirth(String.valueOf(emp.getDateOfBirth()));
 		return employee;
 	}
 
 	@Override
-	public ResponseEntity<String> createEmployee(@RequestBody Employee emp)  {
-		
+	public ResponseEntity<String> createEmployee(@RequestBody Employee emp) {
+
 		validateEmployeeRequest(emp);
-		
+
 		EmployeeDTO empDTO = null;
 		try {
 			empDTO = createEmployeeDTO(emp);
@@ -129,50 +126,50 @@ public class EmployeeResourceImpl implements EmployeeResource {
 		}
 
 		return new ResponseEntity<>("employee record created", HttpStatus.CREATED);
-		
+
 	}
 
 	private void validateEmployeeRequest(Employee emp) {
-		
-		if(StringUtils.isEmpty(emp.getFirstName())) {
+
+		if (StringUtils.isEmpty(emp.getFirstName())) {
 			throw new BadRequestException("first name can not be null or empty");
 		}
-		
-		if(StringUtils.isEmpty(emp.getLastName())) {
+
+		if (StringUtils.isEmpty(emp.getLastName())) {
 			throw new BadRequestException("last name can not be null or empty");
 		}
-		
-		if(StringUtils.isEmpty(emp.getDateBirth())) {
+
+		if (StringUtils.isEmpty(emp.getDateBirth())) {
 			throw new BadRequestException("date of birth  can not be null or empty");
 		}
-		
+
 		validateAddress(emp);
-		
+
 	}
 
 	private void validateAddress(Employee emp) {
 		Address address = emp.getAddress();
-		
-		if(address == null) {
-			throw new BadRequestException("address can not be null");		
+
+		if (address == null) {
+			throw new BadRequestException("address can not be null");
 		}
-		
-		if(StringUtils.isEmpty(address.getAddress1())) {
+
+		if (StringUtils.isEmpty(address.getAddress1())) {
 			throw new BadRequestException("address line1 can not be null or empty");
 		}
-		
-		if(StringUtils.isEmpty(address.getCity())) {
+
+		if (StringUtils.isEmpty(address.getCity())) {
 			throw new BadRequestException("city can not be null or empty");
 		}
-		
-		if(StringUtils.isEmpty(address.getState())) {
+
+		if (StringUtils.isEmpty(address.getState())) {
 			throw new BadRequestException("state can not be null or empty");
 		}
-		
-		if(StringUtils.isEmpty(address.getCountry())) {
+
+		if (StringUtils.isEmpty(address.getCountry())) {
 			throw new BadRequestException("country can not be null or empty");
-		}	
-		if(StringUtils.isEmpty(address.getZipcode())) {
+		}
+		if (StringUtils.isEmpty(address.getZipcode())) {
 			throw new BadRequestException("zipcode can not be null or empty");
 		}
 	}
@@ -188,7 +185,7 @@ public class EmployeeResourceImpl implements EmployeeResource {
 		String zipcode = address.getZipcode();
 
 		AddressDTO addressDTO = new AddressDTO(add1, add2, city, state, country, zipcode);
-		
+
 		if (emp.getAddress().getAddressId() != null) {
 			addressDTO.setAddressId(Long.valueOf(emp.getAddress().getAddressId()));
 		}
@@ -196,19 +193,19 @@ public class EmployeeResourceImpl implements EmployeeResource {
 	}
 
 	private EmployeeDTO createEmployeeDTO(Employee emp) throws ParseException {
-		
+
 		String fristName = emp.getFirstName();
 		String lastName = emp.getLastName();
-		
+
 		String dob = emp.getDateBirth();
 		Date date = new SimpleDateFormat(date_format).parse(dob);
 
 		EmployeeDTO empDTO = new EmployeeDTO(fristName, lastName, date);
-		
-		if(emp.getId() != null) {
+
+		if (emp.getId() != null) {
 			empDTO.setEmployeeId(Long.valueOf(emp.getId()));
 		}
-		
+
 		return empDTO;
 	}
 }

@@ -15,33 +15,32 @@ import javax.persistence.Table;
 @Table(name = "address")
 public class AddressDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addressId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long addressId;
 
-    private String address1;
-    private String address2;
-    private String state;
-    private String zipCode;
-    private String country;
-    private String city;
+	private String address1;
+	private String address2;
+	private String state;
+	private String zipCode;
+	private String country;
+	private String city;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "employeeId", nullable = false)
-    private EmployeeDTO employee;
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "employeeId", nullable = false)
+	private EmployeeDTO employee;
 
-    public AddressDTO() {
-    }
+	public AddressDTO() {
+	}
 
-    public AddressDTO(String address1, String address2, String city, String state, String country,
-    		String zipCode ) {
-        this.address1 = address1;
-        this.address2 = address2;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.zipCode = zipCode;
-    }
+	public AddressDTO(String address1, String address2, String city, String state, String country, String zipCode) {
+		this.address1 = address1;
+		this.address2 = address2;
+		this.city = city;
+		this.state = state;
+		this.country = country;
+		this.zipCode = zipCode;
+	}
 
 	public Long getAddressId() {
 		return addressId;

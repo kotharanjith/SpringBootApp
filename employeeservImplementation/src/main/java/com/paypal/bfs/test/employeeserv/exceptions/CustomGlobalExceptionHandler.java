@@ -1,6 +1,5 @@
 package com.paypal.bfs.test.employeeserv.exceptions;
 
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,19 +16,19 @@ import com.paypal.bfs.test.employeeserv.api.EmployeeResource;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public void employeeNotFound(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.NOT_FOUND.value());
-    }
-   
-    @ExceptionHandler(EmployeeServiceException.class)
-    public void employeeServiceException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-    
-    @ExceptionHandler(BadRequestException.class)
-    public void constraintViolationException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value());
-    }
-	
+	@ExceptionHandler(EmployeeNotFoundException.class)
+	public void employeeNotFound(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.NOT_FOUND.value());
+	}
+
+	@ExceptionHandler(EmployeeServiceException.class)
+	public void employeeServiceException(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	}
+
+	@ExceptionHandler(BadRequestException.class)
+	public void constraintViolationException(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.BAD_REQUEST.value());
+	}
+
 }
