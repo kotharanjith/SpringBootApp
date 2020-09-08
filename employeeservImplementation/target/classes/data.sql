@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS address;
 
 CREATE TABLE employee(
   employeeId INT NOT NULL AUTO_INCREMENT,
-  firstName VARCHAR(255) NULL,
-  lastName VARCHAR(255) NULL,
+  firstName VARCHAR(255) NOT NULL,
+  lastName VARCHAR(255) NOT NULL,
   dateOfBirth DATE DEFAULT NULL,
   PRIMARY KEY(employeeId),
 );
