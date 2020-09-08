@@ -6,3 +6,4 @@
 /Users/rankotha-mac/Downloads/employeeserv-master/employeeservImplementation/src/main/java/com/paypal/bfs/test/employeeserv/exceptions/CustomGlobalExceptionHandler.java
 /Users/rankotha-mac/Downloads/employeeserv-master/employeeservImplementation/src/main/java/com/paypal/bfs/test/employeeserv/domains/AddressDTO.java
 /Users/rankotha-mac/Downloads/employeeserv-master/employeeservImplementation/src/main/java/com/paypal/bfs/test/employeeserv/exceptions/EmployeeNotFoundException.java
+/Users/rankotha-mac/Downloads/employeeserv-master/employeeservImplementation/src/main/java/com/paypal/bfs/test/employeeserv/exceptions/EmployeeServiceException.java

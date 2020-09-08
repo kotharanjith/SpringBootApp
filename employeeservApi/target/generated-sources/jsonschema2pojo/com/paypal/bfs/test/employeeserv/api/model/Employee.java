@@ -1,6 +1,7 @@
 
 package com.paypal.bfs.test.employeeserv.api.model;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -69,7 +70,8 @@ public class Employee {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
+
+	/**
      * employee id
      * 
      */
